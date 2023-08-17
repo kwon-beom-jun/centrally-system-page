@@ -11,5 +11,6 @@
 
 #### Need to items
   - Mobile UI ADD
+  - Logo Change
 
 <br/><br/>
