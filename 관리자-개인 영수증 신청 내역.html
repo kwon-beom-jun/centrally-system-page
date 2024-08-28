@@ -9,11 +9,13 @@
     <link rel="stylesheet" href="default.css">
 </head>
 <body>
-    <!-- jQuery를 먼저 로드 -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    
-    <!-- 네비게이션 플래이스홀더 -->
     <div id="nav-placeholder"></div>
+    <script>
+    $(function(){
+        $("#nav-placeholder").load("test-nav.html");
+    });
+    </script>
 
     <!-- 메인 콘텐츠 영역 -->
     <div class="content">
@@ -73,10 +75,6 @@
 
     <!-- JavaScript for dynamic rendering -->
     <script>
-        $(function(){
-            $("#nav-placeholder").load("test-nav.html");
-        });
-
         $(document).ready(function() {
             // 예시 데이터
             const data = [
