@@ -22,10 +22,11 @@
 
     <!-- 사이드바 / 네비게이션 바 -->
     <div class="sidebar">
-        <a href="#">공지사항</a>
-        <a href="#">영수증 등록</a>
-        <a href="#">정산 목록</a>
-        <a href="#">사용자 정보</a>
+        <a href="통합-공지 사항.html">공지사항</a>
+        <a href="사용자-영수증 등록(메인).html">영수증 등록</a>
+        <a href="사용자-개인 영수증 신청 내역.html">영수증 신청 내역</a>
+        <a href="사용자-정산 목록.html">정산 목록</a>
+        <a href="사용자-사용자 정보.html">사용자 정보</a>
     </div>
 
     <!-- 메인 콘텐츠 영역 -->
@@ -137,16 +138,16 @@
             // 데이터 배열 (예시)
             const data = [
                 { date: '2024-08-01', type: '식비', reason: '야근', amount: '100,000', receipt: '영수증 조회/수정', status: '반려', rejectionReason: '해당 지원사항 X' },
-                { date: '2024-08-02', type: '교통비', reason: '출장', amount: '50,000', receipt: '영수증 조회/수정', status: '완료', rejectionReason: '' },
-                { date: '2024-08-03', type: '식비', reason: '야근', amount: '70,000', receipt: '영수증 조회/수정', status: '완료', rejectionReason: '' },
-                { date: '2024-08-04', type: '교통비', reason: '출장', amount: '30,000', receipt: '영수증 조회/수정', status: '완료', rejectionReason: '' },
+                { date: '2024-08-02', type: '교통비', reason: '출장', amount: '50,000', receipt: '영수증 조회/수정', status: '승인', rejectionReason: '' },
+                { date: '2024-08-03', type: '식비', reason: '야근', amount: '70,000', receipt: '영수증 조회/수정', status: '승인', rejectionReason: '' },
+                { date: '2024-08-04', type: '교통비', reason: '출장', amount: '30,000', receipt: '영수증 조회/수정', status: '신청중', rejectionReason: '' },
                 { date: '2024-08-05', type: '식비', reason: '야근', amount: '80,000', receipt: '영수증 조회/수정', status: '반려', rejectionReason: '해당 지원사항 X' },
-                { date: '2024-08-06', type: '식비', reason: '야근', amount: '90,000', receipt: '영수증 조회/수정', status: '완료', rejectionReason: '' },
-                { date: '2024-08-07', type: '교통비', reason: '출장', amount: '40,000', receipt: '영수증 조회/수정', status: '완료', rejectionReason: '' },
+                { date: '2024-08-06', type: '식비', reason: '야근', amount: '90,000', receipt: '영수증 조회/수정', status: '신청중', rejectionReason: '' },
+                { date: '2024-08-07', type: '교통비', reason: '출장', amount: '40,000', receipt: '영수증 조회/수정', status: '승인', rejectionReason: '' },
                 { date: '2024-08-08', type: '식비', reason: '야근', amount: '100,000', receipt: '영수증 조회/수정', status: '반려', rejectionReason: '해당 지원사항 X' },
-                { date: '2024-08-09', type: '교통비', reason: '출장', amount: '55,000', receipt: '영수증 조회/수정', status: '완료', rejectionReason: '' },
+                { date: '2024-08-09', type: '교통비', reason: '출장', amount: '55,000', receipt: '영수증 조회/수정', status: '승인', rejectionReason: '' },
                 { date: '2024-08-10', type: '식비', reason: '야근', amount: '100,000', receipt: '영수증 조회/수정', status: '반려', rejectionReason: '해당 지원사항 X' },
-                { date: '2024-08-11', type: '교통비', reason: '출장', amount: '65,000', receipt: '영수증 조회/수정', status: '완료', rejectionReason: '' }
+                { date: '2024-08-11', type: '교통비', reason: '출장', amount: '65,000', receipt: '영수증 조회/수정', status: '승인', rejectionReason: '' }
             ];
 
             const itemsPerPage = 5; // 한 페이지에 표시할 항목 수

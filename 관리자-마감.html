@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt Management</title>
+    <!-- 부트스트랩 CSS CDN -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="default.css">
+</head>
+<body>
+    <!-- 상단 네비게이션 -->
+    <nav class="navbar navbar-light">
+        <a class="navbar-brand" href="#">
+            <img src="https://www.kpcnc.co.kr/src/img/logo.png" width="150" height="30" class="d-inline-block align-top" alt="">
+        </a>
+        <div class="navbar-text">
+            <img src="https://avatars.githubusercontent.com/u/48048508?v=4" width="40" height="40" class="rounded-circle" alt="User Image">
+            권 범 준
+        </div>
+    </nav>
+
+    <!-- 사이드바 / 네비게이션 바 -->
+    <div class="sidebar">
+        <a href="통합-공지 사항.html">공지사항</a>
+        <a href="관리자-개인 영수증 신청 내역.html">영수증 신청 내역</a>
+        <a href="관리자-월별 영수증 내역.html">월별 영수증 내역</a>
+        <a href="사용자-사용자 정보.html">사용자 관리</a>
+        <a href="관리자-마감.html">월 마감</a>
+    </div>
+
+
+    <!-- 메인 콘텐츠 영역 -->
+    <div class="content">
+        <h2 id="monthClosingTitle" class="content-title"></h2>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="text-muted">Month End Closing Status</div>
+        </div>
+
+        <br><br>
+        <!-- 마감 체크박스 -->
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="monthCloseCheck">
+            <label class="form-check-label" for="monthCloseCheck" id="monthCloseLabel">
+                <!-- 여기에서 자바스크립트로 텍스트가 삽입될 것입니다. -->
+            </label>
+        </div>
+
+        <!-- 알림 메시지 -->
+        <p class="text-danger mt-2">
+            마감을 완료하고 되돌릴려면 결재권자의 권한이 필요합니다.<br>
+            최종 마감의 다음달을 보여줍니다.
+        </p>
+
+        <!-- 마감 버튼 -->
+        <button class="btn btn-primary mt-3" id="closeButton" disabled>마감</button>
+    </div>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="container">
+            <span class="text-muted">Copyright © Brand 2024</span>
+        </div>
+    </footer>
+
+    <!-- 부트스트랩 JS CDN -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- FontAwesome CDN for Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <!-- JavaScript for dynamic rendering -->
+    <script>
+        $(document).ready(function() {
+            // 현재 월을 계산하여 제목과 레이블에 반영
+            const today = new Date();
+            const currentMonth = today.getMonth() + 1; // 월은 0부터 시작하므로 +1 필요
+            const monthText = currentMonth + '월 마감';
+
+            // 제목과 레이블 업데이트
+            $('#monthClosingTitle').text(monthText);
+            $('#monthCloseLabel').text(today.getFullYear() + '년 ' + monthText + ' 진행');
+
+            // 마감 버튼 활성화/비활성화 로직
+            $('#monthCloseCheck').change(function() {
+                if ($(this).is(':checked')) {
+                    const currentDay = today.getDate();
+                    if (currentDay >= 1 && currentDay <= 31) { // 1일부터 31일까지 활성화
+                        $('#closeButton').prop('disabled', false);
+                    } else {
+                        $('#closeButton').prop('disabled', true);
+                        alert('마감 버튼은 매월 1일부터 31일 사이에만 활성화됩니다.');
+                        $(this).prop('checked', false);
+                    }
+                } else {
+                    $('#closeButton').prop('disabled', true);
+                }
+            });
+
+            // 마감 버튼 클릭 이벤트
+            $('#closeButton').click(function() {
+                const hasRejected = false; // 실제 데이터 로직으로 교체해야 함
+
+                if (hasRejected) {
+                    alert('미승인 / 반려된 내용이 있습니다.');
+                } else {
+                    if (confirm('정말로 마감하시겠습니까?')) {
+                        alert('마감이 완료되었습니다.');
+                        // 실제 마감 로직 추가
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

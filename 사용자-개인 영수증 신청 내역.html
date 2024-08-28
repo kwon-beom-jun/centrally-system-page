@@ -22,20 +22,32 @@
 
     <!-- 사이드바 / 네비게이션 바 -->
     <div class="sidebar">
-        <a href="#">공지사항</a>
-        <a href="#">영수증 신청 내역</a>
-        <a href="#">월별 영수증 내역</a>
-        <a href="#">사용자 관리</a>
-        <a href="#">월 마감</a>
+        <a href="통합-공지 사항.html">공지사항</a>
+        <a href="사용자-영수증 등록(메인).html">영수증 등록</a>
+        <a href="사용자-개인 영수증 신청 내역.html">영수증 신청 내역</a>
+        <a href="사용자-정산 목록.html">정산 목록</a>
+        <a href="사용자-사용자 정보.html">사용자 정보</a>
     </div>
 
     <!-- 메인 콘텐츠 영역 -->
     <div class="content">
-        <h2 class="content-title">권범준님 영수증 신청내역</h2>
+        <h2 class="content-title">영수증 신청내역</h2>
         <div class="d-flex justify-content-end align-items-center mb-3">
-            <label for="nameSearch" class="mr-2">이름 :</label>
-            <input type="text" class="form-control w-auto" id="nameSearch" placeholder="이름 입력">
-            <button class="btn btn-primary ml-3" id="searchButton">조회</button>
+            <label for="monthSearch" class="mr-2">월 선택 :</label>
+            <select class="form-control w-auto" id="monthSearch">
+                <option value="01">1월</option>
+                <option value="02">2월</option>
+                <option value="03">3월</option>
+                <option value="04">4월</option>
+                <option value="05">5월</option>
+                <option value="06">6월</option>
+                <option value="07">7월</option>
+                <option value="08">8월</option>
+                <option value="09">9월</option>
+                <option value="10">10월</option>
+                <option value="11">11월</option>
+                <option value="12">12월</option>
+            </select>
         </div>
         
         <!-- 테이블 보기 -->
@@ -47,8 +59,7 @@
                     <th>사유</th>
                     <th>금액</th>
                     <th>영수증 사진</th>
-                    <th>승인 <input type="checkbox" id="approveAll"></th>
-                    <th>반려 <input type="checkbox" id="rejectAll"></th>
+                    <th>결과</th>
                     <th>반려사유</th>
                 </tr>
             </thead>
@@ -56,11 +67,6 @@
                 <!-- 데이터가 JavaScript로 추가됩니다 -->
             </tbody>
         </table>
-
-        <!-- 저장 버튼 -->
-        <div class="d-flex justify-content-end mb-3">
-            <button class="btn btn-success" id="saveButton">저장</button>
-        </div>
 
         <!-- 페이징 -->
         <div class="d-flex justify-content-center">
@@ -91,8 +97,8 @@
         $(document).ready(function() {
             // 예시 데이터
             const data = [
-                { date: '2024-01-01', type: '식비', reason: '점심 식사', amount: 10000, receipt: 'image1.jpg', approve: false, reject: false, rejectReason: '' },
-                { date: '2024-01-02', type: '교통비', reason: '출장 교통', amount: 15000, receipt: 'image2.jpg', approve: false, reject: false, rejectReason: '' },
+                { date: '2024-01-01', type: '식비', reason: '점심 식사', amount: 10000, receipt: 'image1.jpg', result: '신청중', rejectReason: '' },
+                { date: '2024-01-02', type: '교통비', reason: '출장 교통', amount: 15000, receipt: 'image2.jpg', result: '반려', rejectReason: '영수증 불명확' },
                 // 추가 데이터...
             ];
 
@@ -108,7 +114,7 @@
                 const end = start + rowsPerPage;
                 const paginatedData = data.slice(start, end);
 
-                paginatedData.forEach((item, index) => {
+                paginatedData.forEach((item) => {
                     const row = `
                         <tr>
                             <td>${item.date}</td>
@@ -116,16 +122,14 @@
                             <td>${item.reason}</td>
                             <td>${item.amount.toLocaleString()}원</td>
                             <td><img src="${item.receipt}" alt="영수증 이미지" width="50"></td>
-                            <td><input type="radio" name="decision${start + index}" class="approveRadio"></td>
-                            <td><input type="radio" name="decision${start + index}" class="rejectRadio"></td>
-                            <td><input type="text" class="form-control rejectReason"></td>
+                            <td>${item.result}</td>
+                            <td>${item.rejectReason}</td>
                         </tr>
                     `;
                     dataTable.append(row);
                 });
 
                 updatePagination();
-                setupRadioButtonListeners();
             }
 
             // 페이징 업데이트 함수
@@ -134,30 +138,6 @@
                 $('#currentPage').text(currentPage);
                 $('#prevPage').toggle(currentPage > 1);
                 $('#nextPage').toggle(currentPage < totalPages);
-            }
-
-            // 라디오 버튼 이벤트 설정 함수
-            function setupRadioButtonListeners() {
-                $('.approveRadio').click(function() {
-                    $('#rejectAll').prop('checked', false); // 반려 전체 체크 해제
-                    updateApproveRejectAllCheckboxes();
-                });
-
-                $('.rejectRadio').click(function() {
-                    $('#approveAll').prop('checked', false); // 승인 전체 체크 해제
-                    updateApproveRejectAllCheckboxes();
-                });
-            }
-
-            // '전체 승인' 및 '전체 반려' 체크박스 업데이트 함수
-            function updateApproveRejectAllCheckboxes() {
-                const totalApprove = $('.approveRadio').length;
-                const totalReject = $('.rejectRadio').length;
-                const checkedApprove = $('.approveRadio:checked').length;
-                const checkedReject = $('.rejectRadio:checked').length;
-
-                $('#approveAll').prop('checked', checkedApprove === totalApprove && totalApprove > 0);
-                $('#rejectAll').prop('checked', checkedReject === totalReject && totalReject > 0);
             }
 
             // 페이지 버튼 클릭 이벤트
@@ -176,32 +156,6 @@
                     currentPage++;
                     renderData(currentPage);
                 }
-            });
-
-            // '전체 승인' 체크박스 클릭 이벤트
-            $('#approveAll').click(function() {
-                const checked = $(this).is(':checked');
-                $('input[name^="decision"]').each(function() {
-                    if ($(this).hasClass('approveRadio')) {
-                        $(this).prop('checked', checked);
-                    } else {
-                        $(this).prop('checked', false);
-                    }
-                });
-                $('#rejectAll').prop('checked', false);
-            });
-
-            // '전체 반려' 체크박스 클릭 이벤트
-            $('#rejectAll').click(function() {
-                const checked = $(this).is(':checked');
-                $('input[name^="decision"]').each(function() {
-                    if ($(this).hasClass('rejectRadio')) {
-                        $(this).prop('checked', checked);
-                    } else {
-                        $(this).prop('checked', false);
-                    }
-                });
-                $('#approveAll').prop('checked', false);
             });
 
             // 초기 데이터 렌더링
